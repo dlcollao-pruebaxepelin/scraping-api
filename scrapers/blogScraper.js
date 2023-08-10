@@ -30,9 +30,10 @@ async function getLinksFromBase(category, webhookUrl) {
     
     const urlBase = 'https://xepelin.com/blog/';
     const browser = await puppeteer.launch({
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      executablePath: puppeteer.executablePath()
+  });
     const page = await browser.newPage();
     
     console.log(`Navigating to ${urlBase}${category}...`);
