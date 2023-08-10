@@ -19,6 +19,10 @@ app.post('/scrape', async (req, res) => {
   }
 });
 
+app.get('/', async (req, res) => {
+  res.status(200).json({ "status": "bienvenido" });
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
