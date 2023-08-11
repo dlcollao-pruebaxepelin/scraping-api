@@ -87,11 +87,18 @@ async function getLinksFromBase(category, webhookUrl, mail) {
 }
 
 function filterLinks(hrefs, urlBase, category) {
-    console.log(`Filtering links for base URL: ${urlBase} and category: ${category}`);
-    const filteredHrefs = hrefs.filter(href => href.includes(urlBase) && href.includes(category));
-    filteredHrefs.shift(); // Quitar primer elemento, ya que es la página base de la categoría.
-    return filteredHrefs;
+  console.log(`Filtering links for base URL: ${urlBase} and category: ${category}`);
+  const filteredHrefs = hrefs.filter(href => {
+      // Si la categoría es "pymes", considera también los enlaces que contienen "prestamo"
+      if (category === 'pymes') {
+          return href.includes(urlBase) && (href.includes(category) || href.includes('prestamo'));
+      }
+      return href.includes(urlBase) && href.includes(category);
+  });
+  filteredHrefs.shift(); // Quitar primer elemento, ya que es la página base de la categoría.
+  return filteredHrefs;
 }
+
 
 async function extractInfoFromPage(page, category) {
   const title = await page.$eval('h1', element => element.innerText);
