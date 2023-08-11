@@ -25,7 +25,7 @@ const jwt = new google.auth.JWT(
   ['https://www.googleapis.com/auth/spreadsheets']
 );
 
-async function getLinksFromBase(category, webhookUrl) {
+async function getLinksFromBase(category, webhookUrl, mail) {
     console.log('Starting the scraper...');
     
     const urlBase = 'https://xepelin.com/blog/';
@@ -82,7 +82,7 @@ async function getLinksFromBase(category, webhookUrl) {
   for (let data of fetchedInfo) {
     await appendToSheet(data);
   }
-  notifyWebhook(webhookUrl)
+  notifyWebhook(webhookUrl, mail)
   return fetchedInfo;
 }
 
@@ -165,11 +165,10 @@ async function clearSheetContent() {
   }
 }
 
-async function notifyWebhook(webhookUrl) {
+async function notifyWebhook(webhookUrl, mail) {
   const sheetLink = 'https://docs.google.com/spreadsheets/d/1JrSUeVMSsOga1zvJYC3yFc6Dg6LDayFnLHCTzVyD5po/edit?pli=1#gid=0';
-  const email = 'dlcollao@uc.cl'
   const payload = {
-    email: email,
+    email: mail,
     link: sheetLink
   };
 

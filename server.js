@@ -10,8 +10,9 @@ app.post('/scrape', async (req, res) => {
   console.log(req.body);
   category = req.body.category;
   webhookUrl = req.body.webhook;
+  mail = req.body.mail;
   try {
-    const links = await getLinksFromBase(category, webhookUrl);
+    const links = await getLinksFromBase(category, webhookUrl, mail);
     res.status(200).json(links);
   } catch (error) {
     console.log(error);
